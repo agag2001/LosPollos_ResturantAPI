@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LosPollos.Domain", "LosPoll
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LosPollos.Application", "LosPollos.Application\LosPollos.Application.csproj", "{15DF8F60-30E5-4A60-9B5A-8DCC7ABD031E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LosPollos.Infrastrctrue", "LosPollos.Infrastrctrue\LosPollos.Infrastrctrue.csproj", "{B2CB1E28-C8C8-4199-AFE7-6EF8CE3C1F6B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LosPollos.Infrastructrue", "LosPollos.Infrastrctrue\LosPollos.Infrastructrue.csproj", "{B2CB1E28-C8C8-4199-AFE7-6EF8CE3C1F6B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
