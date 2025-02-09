@@ -17,7 +17,7 @@ namespace LosPollos.Application.Extensions
           
             services.AddScoped<IResturantServices, RestaurantServices>();
            
-
+            services.AddAutoMapper(typeof(IResturantServices).Assembly); 
 
         }
     }

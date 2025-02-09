@@ -19,5 +19,13 @@ namespace LosPollos.API.Controllers
             var restaurants =  await _resturantServices.GetAllRestaurants();       
             return Ok(restaurants);
         }
+        [HttpGet("{id}")]
+        public async Task  <IActionResult> GetById([FromRoute] int id)
+        {
+            var restaurant  = await _resturantServices.GetById(id);       
+            if (restaurant == null) 
+                return NotFound();      
+            return Ok(restaurant);      
+        }
     }
 }

@@ -1,6 +1,10 @@
-@LosPollos.API_HostAddress = http://localhost:5090
+@LosPollos.API_HostAddress = https://localhost:7047
 
 GET {{LosPollos.API_HostAddress}}/weatherforecast/
 Accept: application/json
+
+###
+
+GET {{LosPollos.API_HostAddress}}/api/restaurant
 
 ###
