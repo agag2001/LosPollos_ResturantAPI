@@ -1,4 +1,5 @@
-﻿using LosPollos.Application.Services.Interfaces;
+﻿using LosPollos.Application.DTOs;
+using LosPollos.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,6 +27,14 @@ namespace LosPollos.API.Controllers
             if (restaurant == null) 
                 return NotFound();      
             return Ok(restaurant);      
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateRestaurant(CreateRestaurantDTO restaurantDTO)
+        {
+            var id = await _resturantServices.Create(restaurantDTO);
+            return CreatedAtAction(nameof(GetById), new { id },null);   
+
         }
     }
 }

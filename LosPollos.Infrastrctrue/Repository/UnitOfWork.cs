@@ -12,9 +12,9 @@ namespace LosPollos.Infrastructrue.Repository
             _context = context;
             restaurantRepository  = new RestaurantRepository(context);      
         }
-        public void Save()
+        public async Task Save()
         {
-            _context.SaveChanges();     
+            await _context.SaveChangesAsync();     
             
         }
     }

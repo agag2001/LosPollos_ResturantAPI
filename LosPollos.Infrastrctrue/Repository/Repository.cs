@@ -1,4 +1,5 @@
-﻿using LosPollos.Domain.Interfaces.Repository;
+﻿using LosPollos.Domain.Entities;
+using LosPollos.Domain.Interfaces.Repository;
 using LosPollos.Infrastructrue.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace LosPollos.Infrastructrue.Repository
 {
-    public class Repository<T> : IRepository<T> where T : class
+    public class Repository<T> : IRepository<T> where T : BaseEntity
     {
         private readonly AppDbContext _context ;
         internal DbSet<T> _dbSet ;      
@@ -37,6 +38,11 @@ namespace LosPollos.Infrastructrue.Repository
             return await _dbSet.ToListAsync();      
         }
 
-        
+        public async Task<T> CreateAsync(T entity)
+        {
+            await _dbSet.AddAsync(entity);
+           
+            return entity;
+        }
     }
 }

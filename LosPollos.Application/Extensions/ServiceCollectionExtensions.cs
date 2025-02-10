@@ -1,13 +1,9 @@
-﻿using LosPollos.Application.Services.Implementation;
+﻿using FluentValidation;
+using FluentValidation.AspNetCore;
+using LosPollos.Application.Services.Implementation;
 using LosPollos.Application.Services.Interfaces;
-using LosPollos.Domain.Interfaces.Repository;
+using LosPollos.Application.Validators;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace LosPollos.Application.Extensions
 {
     public static class ServiceCollectionExtensions
@@ -17,7 +13,9 @@ namespace LosPollos.Application.Extensions
           
             services.AddScoped<IResturantServices, RestaurantServices>();
            
-            services.AddAutoMapper(typeof(IResturantServices).Assembly); 
+            services.AddAutoMapper(typeof(CreateRestaurantDtoValidator).Assembly);
+            services.AddValidatorsFromAssembly(typeof(CreateRestaurantDtoValidator).Assembly).
+                AddFluentValidationAutoValidation();
 
         }
     }

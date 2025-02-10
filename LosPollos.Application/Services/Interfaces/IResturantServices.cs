@@ -11,6 +11,7 @@ namespace LosPollos.Application.Services.Interfaces
     public interface IResturantServices
     {
         Task<IEnumerable<RestaurantDTO>> GetAllRestaurants();
-        Task<RestaurantDTO> GetById( int id );      
+        Task<RestaurantDTO> GetById( int id ); 
+        Task<int> Create( CreateRestaurantDTO restaurant );       
     }
 }

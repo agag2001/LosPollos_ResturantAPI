@@ -9,6 +9,6 @@ namespace LosPollos.Domain.Interfaces.Repository
     public interface IUnitOfWork
     {
         IRestaurantRepository restaurantRepository { get; }
-        void Save();
+        Task Save();
     }
 }

@@ -21,6 +21,15 @@ namespace LosPollos.Application.Services.Implementation
             _mapper = mapper;
         }
 
+        public async Task<int> Create(CreateRestaurantDTO restaurantDTO)
+        {
+            _logger.LogInformation("Create new Restaurant");
+            var  restaurant = _mapper.Map<Resturant>(restaurantDTO);
+            var newRestaurant  =  await _unitOfWork.restaurantRepository.CreateAsync(restaurant);
+            await _unitOfWork.Save();
+            return newRestaurant.Id;        
+        }
+
         public async Task<IEnumerable<RestaurantDTO>> GetAllRestaurants()
         {
             _logger.LogInformation("Get All Restaurants");
@@ -37,5 +46,7 @@ namespace LosPollos.Application.Services.Implementation
             var restaurantDTO = _mapper.Map<RestaurantDTO>(resutaurant);        
             return restaurantDTO; 
         }
+
+        
     }
 }
