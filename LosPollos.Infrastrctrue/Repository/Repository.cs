@@ -44,5 +44,16 @@ namespace LosPollos.Infrastructrue.Repository
            
             return entity;
         }
+
+        public async Task DeleteAsync(T entity)
+        {
+             _dbSet.Remove(entity);    
+
+        }
+
+        public async Task UpdateAsync(T entity)
+        {
+           _dbSet.Update(entity);   
+        }
     }
 }

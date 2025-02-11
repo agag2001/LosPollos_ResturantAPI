@@ -3,11 +3,11 @@ using FluentValidation;
 using LosPollos.Application.DTOs;
 using Microsoft.AspNetCore.Identity;
 
-namespace LosPollos.Application.Validators
+namespace LosPollos.Application.Commands.Restaurants.CreateCommands
 {
-    public class CreateRestaurantDtoValidator:AbstractValidator<CreateRestaurantDTO>
+    public class CreateRestaurantCommandValidator : AbstractValidator<CreateRestaurantCommnad>
     {
-        public CreateRestaurantDtoValidator()
+        public CreateRestaurantCommandValidator()
         {
             RuleFor(dto => dto.CantactEmail).EmailAddress().WithMessage("invalid Email Address");
 
@@ -15,7 +15,8 @@ namespace LosPollos.Application.Validators
 
             RuleFor(dto => dto.PostalCode).Matches(@"^\d{5}$").WithMessage("the Post code should be 5 digits . XXXXX ");
 
-           
+
         }
     }
 }
+ 

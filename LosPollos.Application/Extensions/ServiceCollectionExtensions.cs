@@ -1,8 +1,5 @@
 ﻿using FluentValidation;
 using FluentValidation.AspNetCore;
-using LosPollos.Application.Services.Implementation;
-using LosPollos.Application.Services.Interfaces;
-using LosPollos.Application.Validators;
 using Microsoft.Extensions.DependencyInjection;
 namespace LosPollos.Application.Extensions
 {
@@ -10,11 +7,13 @@ namespace LosPollos.Application.Extensions
     {
         public static void AddApplication(this IServiceCollection services)
         {
-          
-            services.AddScoped<IResturantServices, RestaurantServices>();
+            var assembly = typeof(ServiceCollectionExtensions).Assembly;
+
+
+            services.AddMediatR(cofig => cofig.RegisterServicesFromAssembly(assembly));
            
-            services.AddAutoMapper(typeof(CreateRestaurantDtoValidator).Assembly);
-            services.AddValidatorsFromAssembly(typeof(CreateRestaurantDtoValidator).Assembly).
+            services.AddAutoMapper(assembly);
+            services.AddValidatorsFromAssembly(assembly).
                 AddFluentValidationAutoValidation();
 
         }

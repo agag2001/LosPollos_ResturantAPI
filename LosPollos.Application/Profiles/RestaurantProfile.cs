@@ -1,12 +1,8 @@
 ﻿using AutoMapper;
 using LosPollos.Application.DTOs;
 using LosPollos.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+using LosPollos.Application.Commands.Restaurants.CreateCommands;
+using LosPollos.Application.Commands.Restaurants.UpdateCommands;
 namespace LosPollos.Application.Profiles
 {
     public  class RestaurantProfile:Profile
@@ -14,7 +10,8 @@ namespace LosPollos.Application.Profiles
         
         public RestaurantProfile( )
         {
-            CreateMap<CreateRestaurantDTO, Resturant>()
+            CreateMap<UpdateRestaurantCommand, Resturant>();
+            CreateMap<CreateRestaurantCommnad, Resturant>()
                 .ForMember(d=>d.Address,option=>option.MapFrom(source=> new Address()
                 {
                     City = source.City, 

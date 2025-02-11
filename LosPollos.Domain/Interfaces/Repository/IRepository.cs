@@ -12,7 +12,9 @@ namespace LosPollos.Domain.Interfaces.Repository
     {
         Task<IEnumerable<T>> GetAllAsync();
         Task<T?> GetAsync(Expression<Func<T,bool>> predicate,string? includeProperties = null );
-        Task<T> CreateAsync(T entity);        
+        Task<T> CreateAsync(T entity);    
+        Task DeleteAsync(T entity);     
+        Task UpdateAsync(T entity); 
     }
 
 }

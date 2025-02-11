@@ -1,23 +1,22 @@
-﻿using System;
+﻿
+using MediatR;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LosPollos.Application.DTOs
+namespace LosPollos.Application.Commands.Restaurants.CreateCommands
 {
-    public  class CreateRestaurantDTO
+    public class CreateRestaurantCommnad:IRequest<int>
     {
-       
-        
         public string Name { get; set; } = default!;
         public string Description { get; set; } = default!;
         public string Category { get; set; } = default!;
         public bool HasDelivery { get; set; }
         public string? CantactEmail { get; set; }
 
-        [Phone(ErrorMessage ="Invalid Phone Number")]
+        [Phone(ErrorMessage = "Invalid Phone Number")]
         public string? CantactPhone { get; set; }
 
         public string? City { get; set; }
