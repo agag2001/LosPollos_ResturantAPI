@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using LosPollos.Application.Commands.Dishes.CreateCommands;
 using LosPollos.Application.DTOs;
 using LosPollos.Domain.Entities;
 using System;
@@ -13,6 +14,7 @@ namespace LosPollos.Application.Profiles
     {
         public DishProfile()
         {
+            CreateMap<CreateDishCommand, Dish>();
             CreateMap<Dish, DishDTO>();
         }
     }

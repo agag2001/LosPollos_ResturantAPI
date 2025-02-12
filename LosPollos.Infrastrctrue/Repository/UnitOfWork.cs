@@ -7,10 +7,12 @@ namespace LosPollos.Infrastructrue.Repository
     {
         private readonly AppDbContext _context;
         public IRestaurantRepository restaurantRepository {  get; private set; }
+        public IDishRepository dishRepository { get; private set; }     
         public UnitOfWork(AppDbContext context)
         {
             _context = context;
-            restaurantRepository  = new RestaurantRepository(context);      
+            restaurantRepository  = new RestaurantRepository(context);
+            dishRepository = new DishRepository(context);       
         }
         public async Task Save()
         {

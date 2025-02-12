@@ -8,6 +8,7 @@ namespace LosPollos.Domain.Interfaces.Repository
 {
     public interface IUnitOfWork
     {
+        IDishRepository dishRepository { get; }        
         IRestaurantRepository restaurantRepository { get; }
         Task Save();
     }
