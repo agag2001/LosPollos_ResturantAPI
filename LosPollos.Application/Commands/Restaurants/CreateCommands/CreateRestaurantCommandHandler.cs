@@ -27,7 +27,7 @@ namespace LosPollos.Application.Commands.Restaurants.CreateCommands
         public async Task<int> Handle(CreateRestaurantCommnad request, CancellationToken cancellationToken)
         {
 
-            _logger.LogInformation("Create new Restaurant");
+            _logger.LogInformation("Create new {@Restaurant}",request);
             var restaurant = _mapper.Map<Resturant>(request);
             var newRestaurant = await _unitOfWork.restaurantRepository.CreateAsync(restaurant);
             await _unitOfWork.Save();

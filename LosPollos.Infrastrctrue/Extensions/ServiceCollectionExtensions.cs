@@ -15,7 +15,8 @@ namespace LosPollos.Infrastructrue.Extensions
             var connectionString = configuration.GetConnectionString("constr");
             services.AddDbContext<AppDbContext>(options =>
             {
-                options.UseSqlServer(connectionString);
+                // used to add info about the prameter of the query Ex ... where id  = @p1(22)
+                options.UseSqlServer(connectionString).EnableSensitiveDataLogging();
             });
             services.AddScoped<IResturantSeeder,ResturantSeeder>(); 
             services.AddScoped<IUnitOfWork,UnitOfWork>();     

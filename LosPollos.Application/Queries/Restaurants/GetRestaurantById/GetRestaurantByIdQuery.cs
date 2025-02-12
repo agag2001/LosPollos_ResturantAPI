@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace LosPollos.Application.Queries.Restaurants.GetRestaurantById
 {
-    public  class GetRestaurantByIdQuery : IRequest<RestaurantDTO?>
+    public  class GetRestaurantByIdQuery : IRequest<RestaurantDTO>
     {
         public GetRestaurantByIdQuery(int Id)
         {

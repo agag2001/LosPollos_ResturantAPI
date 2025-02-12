@@ -6,6 +6,8 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Update.Internal;
 using LosPollos.Application.Commands.Restaurants.UpdateCommands;
+using LosPollos.Application.DTOs;
+using LosPollos.Domain.Entities;
 
 namespace LosPollos.API.Controllers
 {
@@ -18,22 +20,27 @@ namespace LosPollos.API.Controllers
         {
             _mediator = mediator;
         }
+
         [HttpGet]       
-        public async Task<IActionResult> GetAllRestaurants()
+        public async Task<ActionResult<IEnumerable<RestaurantDTO>>> GetAllRestaurants()
         {
-            var restaurants =  await _mediator.Send(new GetAllRestaurantsQuery());         
+            Thread.Sleep(4000);
+            var restaurants = await _mediator.Send(new GetAllRestaurantsQuery());         
             return Ok(restaurants);
-        }
+    }
         [HttpGet("{id}")]
-        public async Task  <IActionResult> GetById([FromRoute] int id)
+        public async Task<ActionResult<RestaurantDTO>> GetById([FromRoute] int id)
         {
+            // the handling of not found restarunt is done by the custom exception(notFoundException)
+            // so if there is a restaurant with a spacific Id it should return to the User
+            // if not the NotFoundException is thrown in the middelware
             var restaurant  = await _mediator.Send(new GetRestaurantByIdQuery(id));       
-            if (restaurant == null) 
-                return NotFound();      
+                
             return Ok(restaurant);      
         }
 
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<IActionResult> CreateRestaurant(CreateRestaurantCommnad commmad)
         {
             var id = await _mediator.Send(commmad);
@@ -43,25 +50,29 @@ namespace LosPollos.API.Controllers
 
 
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]    // tell the swagger the expected return type  
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteRestaurant([FromRoute] int id)
         {
-            var isDeleted = await _mediator.Send( new DeleteRestaurantCommand(id));
-            if (isDeleted)
-                return NoContent();
-            return NotFound();
+            // the handling of not found restarunt is done by the custom exception(notFoundException)
+            // so if there is a restaurant with a spacific Id it should return to the User
+
+            await _mediator.Send( new DeleteRestaurantCommand(id));       
+             return NoContent();
+          
         }
 
 
         [HttpPatch("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> UpdateRestaurant(UpdateRestaurantCommand command,[FromRoute] int id)
         {
+
             command.Id = id;        
-            var isUpdated  = await _mediator.Send(command);
-            if (isUpdated)
-            {
-                return NoContent(); 
-            }
-            return NotFound();
+            await _mediator.Send(command);         
+            return NoContent(); 
+            
         }
 
     }

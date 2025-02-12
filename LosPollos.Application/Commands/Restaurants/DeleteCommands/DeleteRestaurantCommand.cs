@@ -2,7 +2,7 @@
 
 namespace LosPollos.Application.Commands.Restaurants.DeleteCommands
 {
-    public class DeleteRestaurantCommand:IRequest<bool>
+    public class DeleteRestaurantCommand:IRequest
     {
         public DeleteRestaurantCommand(int id)
         {

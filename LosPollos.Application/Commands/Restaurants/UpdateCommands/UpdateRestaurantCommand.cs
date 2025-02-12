@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace LosPollos.Application.Commands.Restaurants.UpdateCommands
 {
-    public class UpdateRestaurantCommand:IRequest<bool>
+    public class UpdateRestaurantCommand:IRequest
     {
 
         [JsonIgnore]

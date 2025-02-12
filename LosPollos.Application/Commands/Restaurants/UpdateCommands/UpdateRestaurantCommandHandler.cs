@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using LosPollos.Application.Commands.Restaurants.CreateCommands;
 using LosPollos.Domain.Entities;
+using LosPollos.Domain.Exceptions;
 using LosPollos.Domain.Interfaces.Repository;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace LosPollos.Application.Commands.Restaurants.UpdateCommands
 {
-    public class UpdateRestaurantCommandHandler : IRequestHandler<UpdateRestaurantCommand, bool>
+    public class UpdateRestaurantCommandHandler : IRequestHandler<UpdateRestaurantCommand>
     {
 
         private readonly IUnitOfWork _unitOfWork;
@@ -24,15 +25,17 @@ namespace LosPollos.Application.Commands.Restaurants.UpdateCommands
             _logger = logger;
             _mapper = mapper;
         }
-        public async Task<bool> Handle(UpdateRestaurantCommand request, CancellationToken cancellationToken)
+        public async Task Handle(UpdateRestaurantCommand request, CancellationToken cancellationToken)
         {
+            // the @ is used to serialize the object  so it will displayed in the console as it's  prameter not the namespace
+            _logger.LogInformation("Updating Restuarant with Id : {@request.Id} to {@request}",request.Id,request);
             var restaurantFromDB= await _unitOfWork.restaurantRepository.GetAsync(x=>x.Id==request.Id);
             if (restaurantFromDB == null)
-                return false;
+                throw new NotFoundException(nameof(Resturant), request.Id.ToString());
             _mapper.Map(request,restaurantFromDB);
    
             await _unitOfWork.Save();
-            return true;        
+                
             
             
         }
