@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore.Update.Internal;
 using LosPollos.Application.Commands.Restaurants.UpdateCommands;
 using LosPollos.Application.DTOs;
 using LosPollos.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LosPollos.API.Controllers
 {
@@ -21,7 +22,8 @@ namespace LosPollos.API.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet]       
+        [HttpGet]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<RestaurantDTO>>> GetAllRestaurants()
         {
             Thread.Sleep(4000);

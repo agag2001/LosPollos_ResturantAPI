@@ -19,11 +19,18 @@ namespace LosPollos.API.Middleware
                 await next.Invoke(context);   
 
             }
+            
             catch(NotFoundException notFound)
             {
                 _logger.LogWarning(notFound, notFound.Message);
                 context.Response.StatusCode = StatusCodes.Status404NotFound;
                 await context.Response.WriteAsync(notFound.Message);        
+            }
+            catch(UserException userFaild)
+            {
+                _logger.LogWarning(userFaild, userFaild.Message);   
+                context.Response.StatusCode =  StatusCodes.Status400BadRequest;   
+                await context.Response.WriteAsync(userFaild.Message);       
             }
             catch(Exception ex)
             {

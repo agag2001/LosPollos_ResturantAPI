@@ -1,10 +1,12 @@
 
+using LosPollos.API.Extensions;
 using LosPollos.API.Middleware;
 using LosPollos.Application.Extensions;
 using LosPollos.Infrastructrue.Data;
 using LosPollos.Infrastructrue.Extensions;
 using LosPollos.Infrastructrue.Seeders;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using Serilog;
 using Serilog.AspNetCore;
 using Serilog.Events;
@@ -20,31 +22,12 @@ namespace LosPollos.API
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
 
-            builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
-
-            // adding the services of the My exception handler middleware
-
-            builder.Services.AddScoped<ErrorHandlingMiddleware>();
-            builder.Services.AddScoped<RequestTimeLoggingMiddleware>();  
-
-
+            builder.AddPresentation();
             // adding dbcontext services
             builder.Services.AddInfrastructure(builder.Configuration);
             builder.Services.AddApplication();
 
-            // adding serilog configuratoins
-            // the cofiguration is moved to the app.setting.Delevloper cofiguration to more readable and reuasable
-            builder.Host.UseSerilog((context, config) =>
-            {
-                config.ReadFrom.Configuration(context.Configuration);   
-                   
-            });
-       
             var app = builder.Build();
 
             // so the exception middleware will be the first middel ware to check if there any errors 
