@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using LosPollos.Infrastructrue.Authorization;
+using Microsoft.AspNetCore.Http;
 using Org.BouncyCastle.Bcpg;
 using System;
 using System.Collections.Generic;
@@ -29,7 +30,10 @@ namespace LosPollos.Application.User
             var userEmail = user.FindFirst(x => x.Type == ClaimTypes.Email)!.Value;
             var userRoles = user.Claims.Where(x => x.Type == ClaimTypes.Role).Select(x => x.Value);
 
-            return new CurrentUser(userId, userEmail, userRoles);
+            var userNationality = user.FindFirst(x=>x.Type==AppClaimTypes.Nationality)?.Value;
+            var userBirthDateString = user.FindFirst(x => x.Type == AppClaimTypes.BirthDate)?.Value;
+            var birthDate =  userBirthDateString == null ?(DateOnly?) null : DateOnly.ParseExact(userBirthDateString,"yyyy-MM-dd");   
+            return new CurrentUser(userId, userEmail, userRoles,userNationality,birthDate);
 
 
 

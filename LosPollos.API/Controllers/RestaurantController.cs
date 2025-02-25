@@ -9,11 +9,14 @@ using LosPollos.Application.Commands.Restaurants.UpdateCommands;
 using LosPollos.Application.DTOs;
 using LosPollos.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
+using LosPollos.Domain.Constant;
+using LosPollos.Infrastructrue.Authorization;
 
 namespace LosPollos.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class RestaurantController : ControllerBase
     {
        private readonly IMediator _mediator;    
@@ -23,14 +26,16 @@ namespace LosPollos.API.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = UserRoles.Owner)]
+     
         public async Task<ActionResult<IEnumerable<RestaurantDTO>>> GetAllRestaurants()
         {
-            Thread.Sleep(4000);
+            
             var restaurants = await _mediator.Send(new GetAllRestaurantsQuery());         
             return Ok(restaurants);
     }
         [HttpGet("{id}")]
+        [Authorize(Policy =PolicyNames.HasNationality)]
         public async Task<ActionResult<RestaurantDTO>> GetById([FromRoute] int id)
         {
             // the handling of not found restarunt is done by the custom exception(notFoundException)
@@ -42,6 +47,7 @@ namespace LosPollos.API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = UserRoles.Owner)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<IActionResult> CreateRestaurant(CreateRestaurantCommnad commmad)
         {

@@ -1,5 +1,7 @@
-﻿using LosPollos.Domain.Entities;
+﻿using LosPollos.Domain.Constant;
+using LosPollos.Domain.Entities;
 using LosPollos.Infrastructrue.Data;
+using Microsoft.AspNetCore.Identity;
 namespace LosPollos.Infrastructrue.Seeders
 {
     public class ResturantSeeder : IResturantSeeder
@@ -22,7 +24,34 @@ namespace LosPollos.Infrastructrue.Seeders
                     await _context.SaveChangesAsync();
 
                 }
+                if(!_context.Roles.Any())
+                {
+                    var roles = GetRoles();     
+                    _context.Roles.AddRange(roles);     
+                    await _context.SaveChangesAsync();      
+                }
             }
+        }
+        private IEnumerable<IdentityRole> GetRoles()
+        {
+            IEnumerable<IdentityRole> Roles = new List<IdentityRole>()
+            {
+                new(UserRoles.Admin)
+                {
+                    NormalizedName = UserRoles.Admin.ToUpper()
+                },
+                new(UserRoles.User)
+                {
+                    NormalizedName = UserRoles.User.ToUpper()
+                },
+                new(UserRoles.Owner)
+                {
+                    NormalizedName = UserRoles.Owner.ToUpper()
+
+                },
+            };
+            return Roles;
+            
         }
 
         private IEnumerable<Resturant> GetResturants()

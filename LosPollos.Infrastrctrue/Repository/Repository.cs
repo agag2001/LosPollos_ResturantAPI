@@ -21,6 +21,7 @@ namespace LosPollos.Infrastructrue.Repository
             _dbSet =  context.Set<T>();     
             
         }
+       
 
         public async Task<T?> GetAsync(Expression<Func<T, bool>> predicate, string? includeProperties = null)
         {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LosPollos.Application.User
 {
-    public record CurrentUser(string id , string email, IEnumerable<string> roles) 
+    public record CurrentUser(string id , string email, IEnumerable<string> roles,string ? nationality,DateOnly? birthDate ) 
     {
         public bool IsInRole(string roleName)
         {

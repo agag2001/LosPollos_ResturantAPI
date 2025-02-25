@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using LosPollos.Application.Commands.Restaurants.CreateCommands;
+using LosPollos.Domain.Constant;
 using LosPollos.Domain.Entities;
 using LosPollos.Domain.Exceptions;
+using LosPollos.Domain.Interfaces;
 using LosPollos.Domain.Interfaces.Repository;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -19,11 +21,14 @@ namespace LosPollos.Application.Commands.Restaurants.UpdateCommands
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger<UpdateRestaurantCommandHandler> _logger;
         private readonly IMapper _mapper;
-        public UpdateRestaurantCommandHandler(IUnitOfWork unitOfWork, ILogger<UpdateRestaurantCommandHandler> logger, IMapper mapper)
+        private readonly IRestaurantAuhtorizationServices _AuthServices;
+
+        public UpdateRestaurantCommandHandler(IUnitOfWork unitOfWork, ILogger<UpdateRestaurantCommandHandler> logger, IMapper mapper, IRestaurantAuhtorizationServices authServices)
         {
             _unitOfWork = unitOfWork;
             _logger = logger;
             _mapper = mapper;
+            _AuthServices = authServices;
         }
         public async Task Handle(UpdateRestaurantCommand request, CancellationToken cancellationToken)
         {
@@ -32,6 +37,8 @@ namespace LosPollos.Application.Commands.Restaurants.UpdateCommands
             var restaurantFromDB= await _unitOfWork.restaurantRepository.GetAsync(x=>x.Id==request.Id);
             if (restaurantFromDB == null)
                 throw new NotFoundException(nameof(Resturant), request.Id.ToString());
+            if (!_AuthServices.Authorize(restaurantFromDB, ResourceOperation.Update))
+                throw new ForbidException();
             _mapper.Map(request,restaurantFromDB);
    
             await _unitOfWork.Save();

@@ -1,5 +1,6 @@
 ﻿
 using LosPollos.Domain.Exceptions;
+using Microsoft.AspNetCore.Mvc.TagHelpers;
 using System.Runtime.InteropServices;
 
 namespace LosPollos.API.Middleware
@@ -25,6 +26,12 @@ namespace LosPollos.API.Middleware
                 _logger.LogWarning(notFound, notFound.Message);
                 context.Response.StatusCode = StatusCodes.Status404NotFound;
                 await context.Response.WriteAsync(notFound.Message);        
+            }
+            catch (ForbidException forbid)
+            {
+                _logger.LogWarning(forbid, forbid.Message);
+                context.Response.StatusCode = StatusCodes.Status403Forbidden;   
+                await context.Response.WriteAsync(forbid.Message);      
             }
             catch(UserException userFaild)
             {

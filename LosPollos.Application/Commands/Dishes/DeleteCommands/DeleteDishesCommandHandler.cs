@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using LosPollos.Application.Commands.Dishes.CreateCommands;
+using LosPollos.Domain.Constant;
 using LosPollos.Domain.Entities;
 using LosPollos.Domain.Exceptions;
+using LosPollos.Domain.Interfaces;
 using LosPollos.Domain.Interfaces.Repository;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -18,12 +20,14 @@ namespace LosPollos.Application.Commands.Dishes.DeleteCommands
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger<DeleteDishesCommandHandler> _logger;
         private readonly IMapper _mapper;
+        private readonly IRestaurantAuhtorizationServices _authServices;
 
-        public DeleteDishesCommandHandler(IUnitOfWork unitOfWork, ILogger<DeleteDishesCommandHandler> logger, IMapper mapper)
+        public DeleteDishesCommandHandler(IUnitOfWork unitOfWork, ILogger<DeleteDishesCommandHandler> logger, IMapper mapper, IRestaurantAuhtorizationServices authServices)
         {
             _unitOfWork = unitOfWork;
             _logger = logger;
             _mapper = mapper;
+            _authServices = authServices;
         }
         public async Task Handle(DeleteDishesCommand request, CancellationToken cancellationToken)
         {
@@ -31,6 +35,8 @@ namespace LosPollos.Application.Commands.Dishes.DeleteCommands
             var restaurant  = await _unitOfWork.restaurantRepository.GetAsync(x=>x.Id == request.RestaurantId,"Dishes");
             if (restaurant == null)
                 throw new NotFoundException(nameof(Resturant),request.RestaurantId.ToString());
+            if (!_authServices.Authorize(restaurant, ResourceOperation.Update))
+                throw new ForbidException();
             restaurant.Dishes.Clear();
             await _unitOfWork.Save();
 

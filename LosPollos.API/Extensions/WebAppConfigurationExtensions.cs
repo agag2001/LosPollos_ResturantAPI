@@ -1,6 +1,9 @@
 ﻿using LosPollos.API.Middleware;
+using LosPollos.Infrastructrue.Authorization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.OpenApi.Models;
 using Serilog;
+using System.Security.Claims;
 
 namespace LosPollos.API.Extensions
 {
@@ -51,6 +54,10 @@ namespace LosPollos.API.Extensions
                 config.ReadFrom.Configuration(context.Configuration);
 
             });
+
+
+           
+
 
 
         }

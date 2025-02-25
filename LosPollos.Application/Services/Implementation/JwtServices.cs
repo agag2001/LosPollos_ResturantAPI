@@ -3,15 +3,12 @@ using LosPollos.Application.Services.Interfaces;
 using LosPollos.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
+using LosPollos.Infrastructrue.Authorization;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
+
 
 namespace LosPollos.Application.Services.Implementation
 {
@@ -35,6 +32,12 @@ namespace LosPollos.Application.Services.Implementation
             userClaims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id));
             userClaims.Add(new Claim(ClaimTypes.Name, user.FullName));
             userClaims.Add(new Claim(ClaimTypes.Email, user.Email));
+
+            if (user.BirthDate.HasValue)
+                userClaims.Add(new Claim(AppClaimTypes.BirthDate, user.BirthDate.Value.ToString("yyyy-MM-dd")));
+
+            if (user.Nationality != null)
+                userClaims.Add(new Claim(AppClaimTypes.Nationality, user.Nationality));
 
             var userRoles = await _userManager.GetRolesAsync(user);
             foreach (var role in userRoles)

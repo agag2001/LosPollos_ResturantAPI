@@ -4,6 +4,7 @@ using LosPollos.Infrastructrue.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LosPollos.Infrastructrue.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250224184039_owner of Restaurant")]
+    partial class ownerofRestaurant
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -126,7 +129,7 @@ namespace LosPollos.Infrastructrue.Migrations
 
                     b.HasIndex("ResturantId");
 
-                    b.ToTable("Dishes", (string)null);
+                    b.ToTable("Dishes");
                 });
 
             modelBuilder.Entity("LosPollos.Domain.Entities.Resturant", b =>
@@ -166,7 +169,7 @@ namespace LosPollos.Infrastructrue.Migrations
 
                     b.HasIndex("OwnerId");
 
-                    b.ToTable("Resturants", (string)null);
+                    b.ToTable("Resturants");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -321,7 +324,7 @@ namespace LosPollos.Infrastructrue.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.OwnsOne("LosPollos.Domain.Entities.Resturant.Address#LosPollos.Domain.Entities.Address", "Address", b1 =>
+                    b.OwnsOne("LosPollos.Domain.Entities.Address", "Address", b1 =>
                         {
                             b1.Property<int>("ResturantId")
                                 .HasColumnType("int");
@@ -337,7 +340,7 @@ namespace LosPollos.Infrastructrue.Migrations
 
                             b1.HasKey("ResturantId");
 
-                            b1.ToTable("Resturants", (string)null);
+                            b1.ToTable("Resturants");
 
                             b1.WithOwner()
                                 .HasForeignKey("ResturantId");

@@ -1,14 +1,20 @@
 ﻿using LosPollos.Domain.Entities;
+using LosPollos.Domain.Interfaces;
 using LosPollos.Domain.Interfaces.Repository;
+using LosPollos.Infrastructrue.Authorization;
+using LosPollos.Infrastructrue.Authrization.Requirements;
+using LosPollos.Infrastructrue.Authrization.Services;
 using LosPollos.Infrastructrue.Data;
 using LosPollos.Infrastructrue.Repository;
 using LosPollos.Infrastructrue.Seeders;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using System.Diagnostics;
 using System.Text;
 
 namespace LosPollos.Infrastructrue.Extensions
@@ -50,6 +56,15 @@ namespace LosPollos.Infrastructrue.Extensions
 
             });
 
+
+            services.AddAuthorizationBuilder()
+                .AddPolicy(PolicyNames.HasNationality, builder => builder.RequireClaim(AppClaimTypes.Nationality, "egyptian", "german"))
+                .AddPolicy(PolicyNames.AtLeast20,builder=>builder.AddRequirements(new MinimumAgeRequiment(20)))
+                .AddPolicy(PolicyNames.CreatedAtLeast2, builder=>builder.AddRequirements(new MinimumOwnerRequirement(2)));
+            services.AddScoped<IAuthorizationHandler, MinimumAgeRequimentHandler>();
+            services.AddScoped<IRestaurantAuhtorizationServices, RestaurantAuhtorizationServices>();    
+            services.AddScoped<IAuthorizationHandler,MinimumOwnerRequirementHandler>();     
+            
         }
     }
 }

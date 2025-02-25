@@ -4,7 +4,9 @@ using LosPollos.Application.DTOs;
 using LosPollos.Application.Queries.Dishes.GetAllDishes;
 using LosPollos.Application.Queries.Dishes.GetDishById;
 using LosPollos.Domain.Interfaces.Repository;
+using LosPollos.Infrastructrue.Authorization;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,6 +34,7 @@ namespace LosPollos.API.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = PolicyNames.CreatedAtLeast2)]
         public async Task<ActionResult<IEnumerable<DishDTO>>> GetAllDishes([FromRoute] int RestaurantId)
         {
             var dishes = await _mediator.Send(new GetAllDishesQuery(RestaurantId));

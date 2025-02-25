@@ -18,12 +18,14 @@ namespace LosPollos.Infrastructrue.Data
 
         internal DbSet<Resturant> Resturants { get; set; }
         internal DbSet<Dish> Dishes { get; set; }
-
+        internal DbSet<AppUser> AppUsers { get; set; }      
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Resturant>().OwnsOne(x => x.Address);
+            
+            modelBuilder.Entity<Resturant>().HasOne(x=>x.Owner).WithMany(x=>x.Restaurants).HasForeignKey(x=>x.OwnerId); 
         }
     }
 }
