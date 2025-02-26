@@ -16,7 +16,7 @@ namespace LosPollos.Infrastructrue.Data
         {
         }
 
-        internal DbSet<Resturant> Resturants { get; set; }
+        internal DbSet<Resturant> Restaurants { get; set; }
         internal DbSet<Dish> Dishes { get; set; }
         internal DbSet<AppUser> AppUsers { get; set; }      
         

@@ -2,6 +2,7 @@
 using FluentValidation.AspNetCore;
 using LosPollos.Application.Services.Implementation;
 using LosPollos.Application.Services.Interfaces;
+using LosPollos.Application.Specefications;
 using LosPollos.Application.User;
 using Microsoft.Extensions.DependencyInjection;
 namespace LosPollos.Application.Extensions
@@ -21,7 +22,8 @@ namespace LosPollos.Application.Extensions
             services.AddScoped<IJwtServices, JwtServices>();
             services.AddScoped<IEmailServices, EmailServices>();  
             services.AddHttpContextAccessor();      
-            services.AddScoped<IUserContext,UserContext>();     
+            services.AddScoped<IUserContext,UserContext>();
+       
         }
     }
 }

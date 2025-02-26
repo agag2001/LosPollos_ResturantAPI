@@ -17,10 +17,10 @@ namespace LosPollos.Infrastructrue.Seeders
             if (await _context.Database.CanConnectAsync())
             {
                 // if the resturant table is empty seed it
-                if (!_context.Resturants.Any())
+                if (!_context.Restaurants.Any())
                 {
                     var resturants = GetResturants();
-                    _context.Resturants.AddRange(resturants);
+                    _context.Restaurants.AddRange(resturants);
                     await _context.SaveChangesAsync();
 
                 }
@@ -63,7 +63,7 @@ namespace LosPollos.Infrastructrue.Seeders
                 Category = "Fast Food",
                 Description =
                     "KFC (short for Kentucky Fried Chicken) is an American fast food restaurant chain headquartered in Louisville, Kentucky, that specializes in fried chicken.",
-                CantactEmail = "contact@kfc.com",
+                ContactEmail = "contact@kfc.com",
                 HasDelivery = true,
                 Dishes =
                 [
@@ -94,7 +94,7 @@ namespace LosPollos.Infrastructrue.Seeders
                 Category = "Fast Food",
                 Description =
                     "McDonald's Corporation (McDonald's), incorporated on December 21, 1964, operates and franchises McDonald's restaurants.",
-                CantactEmail = "contact@mcdonald.com",
+                ContactEmail = "contact@mcdonald.com",
                 HasDelivery = true,
                 Address = new Address()
                 {

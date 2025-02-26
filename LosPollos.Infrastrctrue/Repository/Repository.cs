@@ -1,4 +1,5 @@
-﻿using LosPollos.Domain.Entities;
+﻿using LosPollos.Application.Specefications;
+using LosPollos.Domain.Entities;
 using LosPollos.Domain.Interfaces.Repository;
 using LosPollos.Infrastructrue.Data;
 using Microsoft.EntityFrameworkCore;
@@ -34,9 +35,16 @@ namespace LosPollos.Infrastructrue.Repository
             return await query.FirstOrDefaultAsync(predicate);     
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync()
+        public async Task<IEnumerable<T>> GetAllAsync(ISpecefication<T>? specification =  null)
         {
-            return await _dbSet.ToListAsync();      
+            IQueryable<T> query = _dbSet;      
+            if(specification is not null)
+            {
+                query =  SpeceficationQueryEvaluator<T>.GetQuery(_dbSet,specification);       
+            }
+            return await query.ToListAsync();
+          
+              
         }
 
         public async Task<T> CreateAsync(T entity)

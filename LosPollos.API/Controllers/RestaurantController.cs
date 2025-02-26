@@ -26,14 +26,13 @@ namespace LosPollos.API.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = UserRoles.Owner)]
-     
-        public async Task<ActionResult<IEnumerable<RestaurantDTO>>> GetAllRestaurants()
-        {
+        [AllowAnonymous]
+       public async Task<ActionResult<IEnumerable<RestaurantDTO>>> GetAllRestaurants([FromQuery]GetAllRestaurantsQuery qurey)
+       {
             
-            var restaurants = await _mediator.Send(new GetAllRestaurantsQuery());         
+            var restaurants = await _mediator.Send(qurey);         
             return Ok(restaurants);
-    }
+       }
         [HttpGet("{id}")]
         [Authorize(Policy =PolicyNames.HasNationality)]
         public async Task<ActionResult<RestaurantDTO>> GetById([FromRoute] int id)

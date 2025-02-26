@@ -1,4 +1,5 @@
-﻿using LosPollos.Domain.Entities;
+﻿using LosPollos.Application.Specefications;
+using LosPollos.Domain.Entities;
 using LosPollos.Domain.Interfaces;
 using LosPollos.Domain.Interfaces.Repository;
 using LosPollos.Infrastructrue.Authorization;
@@ -64,7 +65,7 @@ namespace LosPollos.Infrastructrue.Extensions
             services.AddScoped<IAuthorizationHandler, MinimumAgeRequimentHandler>();
             services.AddScoped<IRestaurantAuhtorizationServices, RestaurantAuhtorizationServices>();    
             services.AddScoped<IAuthorizationHandler,MinimumOwnerRequirementHandler>();     
-            
+           
         }
     }
 }

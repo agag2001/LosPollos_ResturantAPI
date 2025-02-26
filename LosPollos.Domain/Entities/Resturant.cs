@@ -10,8 +10,8 @@ namespace LosPollos.Domain.Entities
         
         public bool HasDelivery { get; set; }       
 
-        public string? CantactEmail { get; set; }   
-        public string? CantactPhone { get; set; }
+        public string? ContactEmail { get; set; }   
+        public string? ContactNumber { get; set; }
         public Address? Address { get; set; }
 
         public List<Dish> Dishes { get; set; } = new();

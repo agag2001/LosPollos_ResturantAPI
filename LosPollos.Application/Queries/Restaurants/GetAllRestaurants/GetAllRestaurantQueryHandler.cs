@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
 using LosPollos.Application.Commands.Restaurants.CreateCommands;
+using LosPollos.Application.Common;
 using LosPollos.Application.DTOs;
+using LosPollos.Application.Specefications.RestaurantSepecifications;
+using LosPollos.Domain.Entities;
 using LosPollos.Domain.Interfaces.Repository;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -12,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace LosPollos.Application.Queries.Restaurants.GetAllRestaurants
 {
-    public class GetAllRestaurantQueryHandler : IRequestHandler<GetAllRestaurantsQuery, IEnumerable<RestaurantDTO>>
+    public class GetAllRestaurantQueryHandler : IRequestHandler<GetAllRestaurantsQuery, PagedResults<RestaurantDTO>>
     {
 
         private readonly IUnitOfWork _unitOfWork;
@@ -24,14 +27,18 @@ namespace LosPollos.Application.Queries.Restaurants.GetAllRestaurants
             _logger = logger;
             _mapper = mapper;
         }
-        public async Task<IEnumerable<RestaurantDTO>> Handle(GetAllRestaurantsQuery request, CancellationToken cancellationToken)
+        public async Task<PagedResults<RestaurantDTO>> Handle(GetAllRestaurantsQuery request, CancellationToken cancellationToken)
         {
 
             _logger.LogInformation("Get All Restaurants");
-            var restaurants = await _unitOfWork.restaurantRepository.GetAllAsync();
+          
+            var (restaurants,count) = await _unitOfWork.restaurantRepository.GetAllMatching(request.SearchPhrase
+                ,request.PageNumber,request.PageSize,request.SortBy,request.SortDirection);
+
             // mapping restaurants to DTO
             var restaurantDTOs = _mapper.Map<IEnumerable<RestaurantDTO>>(restaurants);
-            return restaurantDTOs;
+            var pagedResult = new PagedResults<RestaurantDTO>(restaurantDTOs, count, request.PageSize, request.PageNumber);
+            return pagedResult;
 
         }
     }

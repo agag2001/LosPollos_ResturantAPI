@@ -9,7 +9,7 @@ namespace LosPollos.Application.Commands.Restaurants.CreateCommands
     {
         public CreateRestaurantCommandValidator()
         {
-            RuleFor(dto => dto.CantactEmail).EmailAddress().WithMessage("invalid Email Address");
+            RuleFor(dto => dto.ContactEmail).EmailAddress().WithMessage("invalid Email Address");
 
             RuleFor(dto => dto.Name).Length(3, 100).WithMessage("the Length must be between 3-100 chracter");
 

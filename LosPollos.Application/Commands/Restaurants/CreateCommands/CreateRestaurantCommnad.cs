@@ -14,10 +14,10 @@ namespace LosPollos.Application.Commands.Restaurants.CreateCommands
         public string Description { get; set; } = default!;
         public string Category { get; set; } = default!;
         public bool HasDelivery { get; set; }
-        public string? CantactEmail { get; set; }
+        public string? ContactEmail { get; set; }
 
         [Phone(ErrorMessage = "Invalid Phone Number")]
-        public string? CantactPhone { get; set; }
+        public string? ContactNumber { get; set; }
 
         public string? City { get; set; }
         public string? Street { get; set; }
