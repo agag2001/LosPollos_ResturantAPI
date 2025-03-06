@@ -14,16 +14,16 @@ using System.Threading.Tasks;
 
 namespace LosPollos.Infrastructrue.Authrization.Requirements
 {
-    public class MinimumOwnerRequirementHandler : AuthorizationHandler<MinimumOwnerRequirement>
+    internal class MinimumOwnerRequirementHandler : AuthorizationHandler<MinimumOwnerRequirement>
     {
-        private readonly ILogger<MinimumOwnerRequirementHandler> _logger;
+
         private readonly IUserContext _userContext;
         private readonly IUnitOfWork unitOfWork;
 
 
-        public MinimumOwnerRequirementHandler(ILogger<MinimumOwnerRequirementHandler> logger, IUserContext userContext, IUnitOfWork unitOfWork)
+        public MinimumOwnerRequirementHandler( IUserContext userContext, IUnitOfWork unitOfWork)
         {
-            _logger = logger;
+            
             _userContext = userContext;
             this.unitOfWork = unitOfWork;
         }
@@ -31,7 +31,7 @@ namespace LosPollos.Infrastructrue.Authrization.Requirements
         protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, MinimumOwnerRequirement requirement)
         {
             var user = _userContext.GetCurrentUser();
-            _logger.LogInformation("Handle Owner with id :{id}  Authorization Requirment ", user!.id);
+         
 
             var Restaurants = await unitOfWork.restaurantRepository.GetAllAsync();
             var UserRestaurants = Restaurants.Count(x=>x.OwnerId == user!.id);      
@@ -40,13 +40,13 @@ namespace LosPollos.Infrastructrue.Authrization.Requirements
 
             if (UserRestaurants < requirement.MinimumRestaurantCreated)
             {
-                _logger.LogInformation("number of Restaurant ot the user:{email} is less {require}", user.email, requirement.MinimumRestaurantCreated);
+                /*_logger.LogInformation("number of Restaurant ot the user:{email} is less {require}", user.email, requirement.MinimumRestaurantCreated);*/
                 context.Fail();
                 
             }
             else
-            {
-                _logger.LogInformation("Authoriazation is successful the user {email} match the requeirments", user.email);
+            {/*
+                _logger.LogInformation("Authoriazation is successful the user {email} match the requeirments", user.email);*/
                 context.Succeed(requirement);
                    
 

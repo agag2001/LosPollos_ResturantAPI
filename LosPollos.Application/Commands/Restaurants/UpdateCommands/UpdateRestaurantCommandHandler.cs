@@ -35,10 +35,13 @@ namespace LosPollos.Application.Commands.Restaurants.UpdateCommands
             // the @ is used to serialize the object  so it will displayed in the console as it's  prameter not the namespace
             _logger.LogInformation("Updating Restuarant with Id : {@request.Id} to {@request}",request.Id,request);
             var restaurantFromDB= await _unitOfWork.restaurantRepository.GetAsync(x=>x.Id==request.Id);
+
             if (restaurantFromDB == null)
                 throw new NotFoundException(nameof(Resturant), request.Id.ToString());
+
             if (!_AuthServices.Authorize(restaurantFromDB, ResourceOperation.Update))
                 throw new ForbidException();
+
             _mapper.Map(request,restaurantFromDB);
    
             await _unitOfWork.Save();

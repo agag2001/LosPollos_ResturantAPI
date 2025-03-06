@@ -44,7 +44,7 @@ namespace LosPollos.Application.Commands.Restaurants.CreateCommands
             var restaurant = _mapper.Map<Resturant>(request);
             if (!_AuthServices.Authorize(restaurant, ResourceOperation.Create))
                 throw new ForbidException();
-                restaurant.OwnerId = currentUser.id; 
+            restaurant.OwnerId = currentUser.id; 
             var newRestaurant = await _unitOfWork.restaurantRepository.CreateAsync(restaurant);
             await _unitOfWork.Save();
             return newRestaurant.Id;

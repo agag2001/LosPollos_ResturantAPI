@@ -3,13 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LosPollos.API", "LosPollos.API\LosPollos.API.csproj", "{5CABC2E4-3724-45E2-8074-9898C410E7C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LosPollos.API", "LosPollos.API\LosPollos.API.csproj", "{5CABC2E4-3724-45E2-8074-9898C410E7C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LosPollos.Domain", "LosPollos.Domain\LosPollos.Domain.csproj", "{18F90DF3-C84F-4EFE-AAA9-7C759F2FF1C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LosPollos.Domain", "LosPollos.Domain\LosPollos.Domain.csproj", "{18F90DF3-C84F-4EFE-AAA9-7C759F2FF1C7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LosPollos.Application", "LosPollos.Application\LosPollos.Application.csproj", "{15DF8F60-30E5-4A60-9B5A-8DCC7ABD031E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LosPollos.Application", "LosPollos.Application\LosPollos.Application.csproj", "{15DF8F60-30E5-4A60-9B5A-8DCC7ABD031E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LosPollos.Infrastructrue", "LosPollos.Infrastrctrue\LosPollos.Infrastructrue.csproj", "{B2CB1E28-C8C8-4199-AFE7-6EF8CE3C1F6B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LosPollos.Infrastructrue", "LosPollos.Infrastrctrue\LosPollos.Infrastructrue.csproj", "{B2CB1E28-C8C8-4199-AFE7-6EF8CE3C1F6B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LosPollos.ApplicationTests", "LosPollos.ApplicationTests\LosPollos.ApplicationTests.csproj", "{F805EF90-066E-4A60-BCFC-63FB998DAF28}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LosPollos.InfrastructrueTests", "LosPollos.InfrastructrueTests\LosPollos.InfrastructrueTests.csproj", "{5D4A6F37-FD79-4E93-9DE4-40980B1BD7FE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LosPollos.APITests", "LosPollos.APITests\LosPollos.APITests.csproj", "{974C4ED6-4E43-4FE5-B2E4-A9B4D9221D23}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +39,18 @@ Global
 		{B2CB1E28-C8C8-4199-AFE7-6EF8CE3C1F6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2CB1E28-C8C8-4199-AFE7-6EF8CE3C1F6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B2CB1E28-C8C8-4199-AFE7-6EF8CE3C1F6B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F805EF90-066E-4A60-BCFC-63FB998DAF28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F805EF90-066E-4A60-BCFC-63FB998DAF28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F805EF90-066E-4A60-BCFC-63FB998DAF28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F805EF90-066E-4A60-BCFC-63FB998DAF28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D4A6F37-FD79-4E93-9DE4-40980B1BD7FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D4A6F37-FD79-4E93-9DE4-40980B1BD7FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D4A6F37-FD79-4E93-9DE4-40980B1BD7FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D4A6F37-FD79-4E93-9DE4-40980B1BD7FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{974C4ED6-4E43-4FE5-B2E4-A9B4D9221D23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{974C4ED6-4E43-4FE5-B2E4-A9B4D9221D23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{974C4ED6-4E43-4FE5-B2E4-A9B4D9221D23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{974C4ED6-4E43-4FE5-B2E4-A9B4D9221D23}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

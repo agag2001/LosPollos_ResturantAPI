@@ -30,8 +30,9 @@ namespace LosPollos.Application.Queries.Restaurants.GetRestaurantById
         public async Task<RestaurantDTO> Handle(GetRestaurantByIdQuery request, CancellationToken cancellationToken)
         {
             _logger.LogInformation("Get  Restaurant with {@request.Id}",request.Id);
-            var resutaurant = await _unitOfWork.restaurantRepository.GetAsync(x => x.Id == request.Id, "Dishes")
-                ?? throw new NotFoundException(nameof(Resturant), request.Id.ToString()); ;
+            var resutaurant = await _unitOfWork.restaurantRepository.GetAsync(x => x.Id == request.Id, "Dishes");
+            if (resutaurant is null)
+               throw new NotFoundException(nameof(Resturant), request.Id.ToString()); ;
             var restaurantDTO = _mapper.Map<RestaurantDTO>(resutaurant);
             return restaurantDTO;
         }
