@@ -14,6 +14,7 @@ namespace LosPollos.Domain.Entities
         public DateOnly? BirthDate { get; set; }        
         public string? Nationality {  get; set; }       
 
-        public ICollection<Resturant> Restaurants { get; set; } = new List<Resturant>();        
+        public ICollection<Resturant> Restaurants { get; set; } = new List<Resturant>();    
+        public List<RefreshToken>? RefreshTokens { get; set; }   = new List<RefreshToken>(); 
     }
 }

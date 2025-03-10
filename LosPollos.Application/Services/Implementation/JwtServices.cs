@@ -8,6 +8,7 @@ using System.IdentityModel.Tokens.Jwt;
 using LosPollos.Infrastructrue.Authorization;
 using System.Security.Claims;
 using System.Text;
+using System.Security.Cryptography;
 
 
 namespace LosPollos.Application.Services.Implementation
@@ -24,6 +25,39 @@ namespace LosPollos.Application.Services.Implementation
         }
 
         public async Task<AuthResponseDTO> GenerateToken(AppUser user)
+        {
+            var authResponseDto = new AuthResponseDTO();        
+
+          var token =   await CreateToken(user);   
+            if (user.RefreshTokens.Any(x => x.IsActive))
+            {
+                var activeRefreshToken = user.RefreshTokens.FirstOrDefault(x => x.IsActive);
+                authResponseDto.RefreshToken = activeRefreshToken.Token;        
+                authResponseDto.RefreshTokenExpiration = activeRefreshToken.ExpiredAt;  
+            }
+            else
+            {
+                var refreshToken  = GenerateRefreshToken();
+                user.RefreshTokens.Add(refreshToken);
+                authResponseDto.RefreshToken = refreshToken.Token;
+                authResponseDto.RefreshTokenExpiration = refreshToken.ExpiredAt;
+                await _userManager.UpdateAsync(user);
+            }
+            authResponseDto.Token = new JwtSecurityTokenHandler().WriteToken(token);
+
+            return authResponseDto; 
+        }
+        public RefreshToken GenerateRefreshToken()
+        {
+            var randomNumber = new byte[32];
+            RandomNumberGenerator.Fill(randomNumber);   
+            return new RefreshToken 
+            { 
+                Token = Convert.ToBase64String(randomNumber),
+                ExpiredAt = DateTime.UtcNow.AddDays(30)        
+            };
+        }
+        public async Task<JwtSecurityToken> CreateToken(AppUser user)
         {
 
             // 2) payload
@@ -51,21 +85,14 @@ namespace LosPollos.Application.Services.Implementation
 
             SigningCredentials credentials = new SigningCredentials(symmetricKey, SecurityAlgorithms.HmacSha256);
             JwtSecurityToken token = new JwtSecurityToken(
-                issuer: _configuration["JWT:Issuer"],  
-                expires: DateTime.UtcNow.AddHours(12),
+                issuer: _configuration["JWT:Issuer"],
+                expires: DateTime.UtcNow.AddMinutes(10),
                 claims: userClaims,
                 signingCredentials: new SigningCredentials(
                     new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:SecretKey"])),
                     SecurityAlgorithms.HmacSha256)
             );
-
-
-            return new AuthResponseDTO
-            {
-                Token = new JwtSecurityTokenHandler().WriteToken(token),
-                ExpairedAt = DateTime.Now.AddHours(12),
-
-            };
+            return token;
         }
     }
 }

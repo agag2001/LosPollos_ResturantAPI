@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using LosPollos.Application.Commands.Dishes.CreateCommands;
+using LosPollos.Application.Commands.Dishes.UpdateCommands;
 using LosPollos.Application.DTOs;
 using LosPollos.Domain.Entities;
 using System;
@@ -16,6 +17,10 @@ namespace LosPollos.Application.Profiles
         {
             CreateMap<CreateDishCommand, Dish>();
             CreateMap<Dish, DishDTO>();
+            CreateMap<UpdateDishCommand, Dish>()
+                .ForMember(dest=>dest.ResturantId,src=>src.MapFrom(x=>x.RestaurantId))
+                .ForMember(dest=>dest.Id,src=>src.MapFrom(x=>x.DishId));
+
         }
     }
 }

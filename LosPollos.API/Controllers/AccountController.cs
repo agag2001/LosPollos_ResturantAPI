@@ -1,7 +1,9 @@
 ﻿using LosPollos.Application.Commands.Account.ForgotPassword;
 using LosPollos.Application.Commands.Account.Login;
+using LosPollos.Application.Commands.Account.RefreshToken;
 using LosPollos.Application.Commands.Account.Register;
 using LosPollos.Application.Commands.Account.ResetPassword;
+using LosPollos.Application.Commands.Account.RevokeToken;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -30,7 +32,7 @@ namespace LosPollos.API.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginCommand command)
         {
-            var token= await _mediator.Send(command);       
+            var token= await _mediator.Send(command);
             return Ok(token);   
         }
         [HttpPost("forgotPassword")]
@@ -46,5 +48,19 @@ namespace LosPollos.API.Controllers
             await _mediator.Send(commnad);
             return Ok();
         }
+
+        [HttpPost("refreshToken")]      
+        public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenCommand command)
+        {
+            var authResponse = await _mediator.Send(command);        
+            return Ok(authResponse);      
+        }
+        [HttpPost("revokeToken")]       
+        public async Task<IActionResult> RevokeToken([FromBody] RevokeTokenCommand command)
+        {
+            await _mediator.Send(command);
+            return Ok("Token revoked");
+        }   
+
     }
 }

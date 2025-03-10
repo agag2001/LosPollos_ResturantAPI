@@ -25,7 +25,8 @@ namespace LosPollos.Infrastructrue.Data
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Resturant>().OwnsOne(x => x.Address);
             
-            modelBuilder.Entity<Resturant>().HasOne(x=>x.Owner).WithMany(x=>x.Restaurants).HasForeignKey(x=>x.OwnerId); 
+            modelBuilder.Entity<Resturant>().HasOne(x=>x.Owner).WithMany(x=>x.Restaurants).HasForeignKey(x=>x.OwnerId);
+            modelBuilder.Entity<AppUser>().OwnsMany(x => x.RefreshTokens);
         }
     }
 }

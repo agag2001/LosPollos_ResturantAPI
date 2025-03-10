@@ -50,9 +50,10 @@ namespace LosPollos.Infrastructrue.Extensions
                     ValidateIssuer = true,
                     ValidateLifetime = true,
                     ValidateAudience = false,
-                    ValidIssuer = configuration["JWT:Issuer"] ,   
+                    ValidIssuer = configuration["JWT:Issuer"],
                     IssuerSigningKey = new SymmetricSecurityKey(
-                            Encoding.UTF8.GetBytes(configuration["JWT:SecretKey"]))
+                            Encoding.UTF8.GetBytes(configuration["JWT:SecretKey"])),
+                    ClockSkew = TimeSpan.Zero       
                 };
 
             });

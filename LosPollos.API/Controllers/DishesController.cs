@@ -1,5 +1,6 @@
 ﻿using LosPollos.Application.Commands.Dishes.CreateCommands;
 using LosPollos.Application.Commands.Dishes.DeleteCommands;
+using LosPollos.Application.Commands.Dishes.UpdateCommands;
 using LosPollos.Application.DTOs;
 using LosPollos.Application.Queries.Dishes.GetAllDishes;
 using LosPollos.Application.Queries.Dishes.GetDishById;
@@ -14,6 +15,7 @@ namespace LosPollos.API.Controllers
 {
     [Route("api/Restaurant/{RestaurantId}/Dishes")]
     [ApiController]
+    [Authorize]
     public class DishesController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -23,14 +25,14 @@ namespace LosPollos.API.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost]                                                    
+        [HttpPost]
         public async Task<IActionResult> CreateDish([FromRoute] int RestaurantId, CreateDishCommand command)
         {
             command.ResturantId = RestaurantId;
             var DishId = await _mediator.Send(command);
 
-            
-            return CreatedAtAction(nameof(GetDishByID), new { RestaurantId , DishId },null);
+
+            return CreatedAtAction(nameof(GetDishByID), new { RestaurantId, DishId }, null);
         }
 
         [HttpGet]
@@ -53,8 +55,17 @@ namespace LosPollos.API.Controllers
         {
             await _mediator.Send(new DeleteDishesCommand(RestaurantId));
 
-            return NoContent(); 
+            return NoContent();
         }
+        [HttpPut("{DishId}")]
+        public async Task<IActionResult> UpdateDish([FromRoute] int DishId, [FromRoute] int RestaurantId,[FromBody]UpdateDishCommand command)
+        {
+            command.RestaurantId = RestaurantId;
+            command.DishId = DishId;        
+            await _mediator.Send(command);
+            return NoContent();
+        }
+      
     }
 
 }

@@ -31,10 +31,18 @@ namespace LosPollos.API.Controllers.Tests
             }));
         }
         [Fact]
-        public async void GetAllRestaurants_ForValidRequest_ShouldReturn200Ok()
+        public async Task GetAllRestaurants_ForValidRequest_ShouldReturn200Ok()
         {
             // Arrange
             var client = _factroy.CreateClient();
+            var resturants = new List<Resturant>()
+            {
+                new()
+                {
+                    Name = "ahmed"
+                }
+            };
+            _unitOfWorkMock.Setup(x => x.restaurantRepository.GetAllAsync(null)).ReturnsAsync(resturants);
             //Act
            var result =  await client.GetAsync("api/Restaurant?pageNumber=1&pageSize=10");
             //Assert
